@@ -14,6 +14,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
     user.refreshToken = refreshToken;
     await user.save({ vlidateBeforeSave: false });
 
+    console.log("access Token generated: ", accessToken);
     return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(
@@ -127,7 +128,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const { email, userName, password } = req.body;
 
-  if (!userName && !email) {
+  if (!(userName || email)) {
     throw new ApiError(400, "Username or Email is required");
   }
 
@@ -176,9 +177,13 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findOneAndUpdate(req.user._d, {
-    $unset: { refreshToken: true },
-  });
+  await User.findOneAndUpdate(
+    req.user._id,
+    {
+      $unset: { refreshToken: "" },
+    },
+    { new: true }
+  );
 
   const options = {
     httpOnly: true,
@@ -188,7 +193,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options);
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "User logout successfully"));
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
