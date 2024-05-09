@@ -45,16 +45,16 @@ const registerUser = asyncHandler(async (req, res) => {
   //</solution>
   //
 
-  const { userName, fullName, email, password } = req.body;
+  const { username, fullName, email, password } = req.body;
 
   if (
-    [userName, fullName, email, password].some((field) => field?.trim() === "")
+    [username, fullName, email, password].some((field) => field?.trim() === "")
   ) {
     throw new ApiError(400, "All fields are required");
   }
 
   const existedUser = await User.findOne({
-    $or: [{ userName }, { email }],
+    $or: [{ username }, { email }],
   });
 
   if (existedUser) {
@@ -84,7 +84,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    userName,
+    username,
     fullName,
     avatar: avatar.url,
     coverImage: coverImage?.url || "",
@@ -108,9 +108,9 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   //
   //<assignment>
-  // get userName or email and password
+  // get username or email and password
   // check all fields are not empty
-  // find user in database through data base call with userName and email
+  // find user in database through data base call with username and email
   // check password is same as in database
   // generate tokens
   // return response with tokens
@@ -125,14 +125,14 @@ const loginUser = asyncHandler(async (req, res) => {
   // send cookies
   //</solution>
 
-  const { email, userName, password } = req.body;
+  const { email, username, password } = req.body;
 
-  if (!(userName || email)) {
+  if (!(username || email)) {
     throw new ApiError(400, "Username or Email is required");
   }
 
   const user = await User.findOne({
-    $or: [{ email }, { userName }],
+    $or: [{ email }, { username }],
   });
 
   if (!user) {
@@ -305,7 +305,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  return re
+  return res
     .status(200)
     .json(new ApiResponse(200, user, "Avatar updated successfully"));
 });
@@ -331,7 +331,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  return re
+  return res
     .status(200)
     .json(new ApiResponse(200, user, "Cover image updated successfully"));
 });
@@ -345,7 +345,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
   const channel = await User.aggregate([
     {
-      $match: { userName: username?.toLowerCase() },
+      $match: { username: username?.toLowerCase() },
     },
     {
       $lookup: {
@@ -385,7 +385,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     {
       $project: {
         fullName: 1,
-        userName: 1,
+        username: 1,
         subscribersCount: 1,
         channelsSubscribedToCount: 1,
         isSubscribed: 1,
@@ -433,7 +433,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
                 {
                   $project: {
                     fullName: 1,
-                    userName: 1,
+                    username: 1,
                     avatar: 1,
                   },
                 },
