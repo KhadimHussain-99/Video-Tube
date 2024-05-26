@@ -50,4 +50,37 @@ const publishAVideo = asyncHandler(async (req, res) => {
     );
 });
 
-export { publishAVideo };
+const getAllVideos = asyncHandler(async (req, res) => {
+  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  //TODO: get all videos based on query, sort, pagination
+
+  const queryObject = {};
+  if (query) {
+    queryObject.title = { $regex: query, $options: "i" };
+  }
+  if (userId) {
+    queryObject.owner = userId;
+  }
+
+  const sort = {};
+  if (sortBy) {
+    sort[sortBy] = sortType || "asc";
+  }
+
+  const skip = (page - 1) * limit;
+
+  const videos = await Video.find(queryObject)
+    .sort(sort)
+    .skip(skip)
+    .limit(limit);
+  const count = await Video.countDocuments(queryObject);
+
+  return res.status(200).json(
+    new ApiResponse(200, {
+      videos,
+      pagination: { page, limit, totalPages: Math.ceil(count / limit) },
+    })
+  );
+});
+
+export { publishAVideo, getAllVideos };
