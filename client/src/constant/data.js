@@ -1,32 +1,53 @@
 export const menuItems = [
   {
-    isHeadr: true,
-    title: "menu",
-  },
-
-  {
     title: "Home",
     icon: "heroicons-outline:home",
+    link: "",
     isOpen: true,
-    isHide: true,
+    // isHide: true,
   },
   {
-    title: "changelog",
-    icon: "heroicons:arrow-trending-up",
-    link: "changelog",
-    isHide: false,
-    badge: "1.0.0",
+    title: "Liked Videos",
+    icon: "uiw:like-o",
+    link: "liked_videos",
   },
   {
-    isHeadr: true,
-    title: "apps",
+    title: "History",
+    icon: "icon-park-outline:history",
+    link: "history",
   },
   {
-    title: "Email",
-    isHide: true,
-    icon: "heroicons-outline:mail",
-    link: "email",
+    title: "My Content",
+    icon: "mynaui:video",
+    link: "content",
   },
+  {
+    title: "Collection",
+    icon: "bi:collection-play",
+    link: "collection",
+  },
+  {
+    title: "Subscribers",
+    icon: "tdesign:user-checked-1",
+    link: "subscribers",
+  },
+  // {
+  //   title: "changelog",
+  //   icon: "heroicons:arrow-trending-up",
+  //   link: "changelog",
+  //   isHide: false,
+  //   badge: "1.0.0",
+  // },
+  // {
+  //   isHeadr: true,
+  //   title: "apps",
+  // },
+  // {
+  //   title: "Email",
+  //   isHide: true,
+  //   icon: "heroicons-outline:mail",
+  //   link: "email",
+  // },
 ];
 
 export const topMenu = [
@@ -361,34 +382,31 @@ import User2 from "@/assets/images/all-img/user2.png";
 import User3 from "@/assets/images/all-img/user3.png";
 import User4 from "@/assets/images/all-img/user4.png";
 export const notifications = [
-  {
-    title: "Your order is placed",
-    desc: "Amet minim mollit non deser unt ullamco est sit aliqua.",
-
-    image: User1,
-    link: "#",
-  },
-  {
-    title: "Congratulations Darlene  🎉",
-    desc: "Won the monthly best seller badge",
-    unread: true,
-    image: User2,
-    link: "#",
-  },
-  {
-    title: "Revised Order 👋",
-    desc: "Won the monthly best seller badge",
-
-    image: User3,
-    link: "#",
-  },
-  {
-    title: "Brooklyn Simmons",
-    desc: "Added you to Top Secret Project group...",
-
-    image: User4,
-    link: "#",
-  },
+  // {
+  //   title: "Your order is placed",
+  //   desc: "Amet minim mollit non deser unt ullamco est sit aliqua.",
+  //   image: User1,
+  //   link: "#",
+  // },
+  // {
+  //   title: "Congratulations Darlene  🎉",
+  //   desc: "Won the monthly best seller badge",
+  //   unread: true,
+  //   image: User2,
+  //   link: "#",
+  // },
+  // {
+  //   title: "Revised Order 👋",
+  //   desc: "Won the monthly best seller badge",
+  //   image: User3,
+  //   link: "#",
+  // },
+  // {
+  //   title: "Brooklyn Simmons",
+  //   desc: "Added you to Top Secret Project group...",
+  //   image: User4,
+  //   link: "#",
+  // },
 ];
 
 export const message = [

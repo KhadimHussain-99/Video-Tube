@@ -7,7 +7,7 @@ import {
 } from "../controllers/video.controller.js";
 
 const router = Router();
-router.use(verifyJwt);
+// router.use(verifyJwt);
 
 router
   .route("/")

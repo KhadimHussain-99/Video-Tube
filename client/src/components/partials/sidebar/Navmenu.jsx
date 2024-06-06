@@ -4,6 +4,7 @@ import { Collapse } from "react-collapse";
 import Icon from "@/components/ui/Icon";
 import { useDispatch } from "react-redux";
 import useMobileMenu from "@/hooks/useMobileMenu";
+import useSidebar from "@/hooks/useSidebar";
 
 const Navmenu = ({ menus }) => {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
@@ -20,6 +21,7 @@ const Navmenu = ({ menus }) => {
   const locationName = location.pathname.replace("/", "");
   const [mobileMenu, setMobileMenu] = useMobileMenu();
   const dispatch = useDispatch();
+  const [collapsed, setMenuCollapsed] = useSidebar();
 
   useEffect(() => {
     let submenuIndex = null;
@@ -36,7 +38,7 @@ const Navmenu = ({ menus }) => {
         }
       }
     });
-    document.title = `VideoTube | ${locationName}`;
+    document.title = `PlatTube | ${locationName}`;
 
     setActiveSubmenu(submenuIndex);
     if (mobileMenu) {
@@ -46,11 +48,12 @@ const Navmenu = ({ menus }) => {
 
   return (
     <>
-      <ul>
+      <ul className="relative space-y-2">
         {menus.map((item, i) => (
           <li
             key={i}
             className={` single-sidebar-menu 
+            ${!collapsed && "border rounded-md dark:border-slate-700"}
               ${item.child ? "item-has-children" : ""}
               ${activeSubmenu === i ? "open" : ""}
               ${locationName === item.link ? "menu-item-active" : ""}`}
@@ -126,6 +129,32 @@ const Navmenu = ({ menus }) => {
             </Collapse>
           </li>
         ))}
+        <li
+          className={` single-sidebar-menu 
+            ${!collapsed && "border rounded-md dark:border-slate-700"}
+              ${locationName === "/support" ? "menu-item-active" : ""}`}
+        >
+          <NavLink className="menu-link" to={"/setting"}>
+            <span className="menu-icon flex-grow-0">
+              <Icon icon={"ph:question"} />
+            </span>
+            <div className="text-box flex-grow">Support</div>
+            {/* {item.badge && <span className="menu-badge">{item.badge}</span>} */}
+          </NavLink>
+        </li>
+        <li
+          className={` single-sidebar-menu 
+            ${!collapsed && "border rounded-md dark:border-slate-700"}
+              ${locationName === "/setting" ? "menu-item-active" : ""}`}
+        >
+          <NavLink className="menu-link" to={"/setting"}>
+            <span className="menu-icon flex-grow-0">
+              <Icon icon={"simple-line-icons:settings"} />
+            </span>
+            <div className="text-box flex-grow">Settings</div>
+            {/* {item.badge && <span className="menu-badge">{item.badge}</span>} */}
+          </NavLink>
+        </li>
       </ul>
     </>
   );

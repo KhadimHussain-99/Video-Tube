@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, Fragment, useRef } from "react";
+import React, {  Suspense, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "@/components/partials/header";
 import Sidebar from "@/components/partials/sidebar";
@@ -7,13 +7,9 @@ import useSidebar from "@/hooks/useSidebar";
 import useContentWidth from "@/hooks/useContentWidth";
 import useMenulayout from "@/hooks/useMenulayout";
 import useMenuHidden from "@/hooks/useMenuHidden";
-import Footer from "@/components/partials/footer";
-import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import MobileMenu from "../components/partials/sidebar/MobileMenu";
 import useMobileMenu from "@/hooks/useMobileMenu";
-import MobileFooter from "@/components/partials/footer/MobileFooter";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
 import Loading from "@/components/Loading";
 const Layout = () => {
   const { width, breakpoints } = useWidth();
@@ -71,7 +67,7 @@ const Layout = () => {
         }`}
       >
         {/* md:min-h-screen will h-full*/}
-        <div className="page-content   page-min-height  ">
+        <div className="p-4">
           <div
             className={
               contentWidth === "boxed" ? "container mx-auto" : "container-fluid"

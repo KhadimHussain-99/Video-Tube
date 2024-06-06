@@ -19,7 +19,7 @@ const SidebarLogo = ({ menuHover }) => {
   const [skin] = useSkin();
   return (
     <div
-      className={` logo-segment flex justify-between items-center bg-white dark:bg-slate-800 z-[9] py-6  px-4 
+      className={` logo-segment flex justify-between items-center bg-white dark:bg-slate-800  z-[9] py-3  px-4 
       ${menuHover ? "logo-hovered" : ""}
       ${
         skin === "bordered"
@@ -29,19 +29,29 @@ const SidebarLogo = ({ menuHover }) => {
       
       `}
     >
-      <Link to="/dashboard">
+      <Link to="/">
         <div className="flex items-center space-x-4">
           <div className="logo-icon">
             {!isDark && !isSemiDark ? (
-              <img src={MobileLogo} alt="" />
+              <div className="w-10 p-1 bg-slate-500 rounded-full">
+                <img
+                  className="w-full object-cover "
+                  src={MobileLogo}
+                  alt="logo"
+                />
+              </div>
             ) : (
-              <img src={MobileLogoWhite} alt="" />
+              <img
+                className="w-8 object-cover"
+                src={MobileLogoWhite}
+                alt="logo"
+              />
             )}
           </div>
 
           {(!collapsed || menuHover) && (
             <div>
-              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+              <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                 PlayTube
               </h1>
             </div>

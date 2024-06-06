@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Textinput from "../../../components/ui/Textinput";
 import Fileinput from "../../../components/ui/Fileinput";
 import axios from "axios";
-import { registerUser } from "../../../constant/apiRoutes";
+import { registerUserApi } from "../../../constant/apiRoutes";
 import noData from "../../../assets/images/vectors/no-data.webp";
 
 const schema = yup.object().shape({
@@ -65,7 +65,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(registerUser, {
+      const res = await axios.post(registerUserApi, {
         ...data,
         avatar,
         coverImage,
