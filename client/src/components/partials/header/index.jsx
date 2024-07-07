@@ -12,6 +12,7 @@ import Profile from "./Tools/Profile";
 import Notification from "./Tools/Notification";
 import useRtl from "@/hooks/useRtl";
 import useMobileMenu from "@/hooks/useMobileMenu";
+import { useSelector } from "react-redux";
 
 const Header = ({ className = "custom-class" }) => {
   const [collapsed, setMenuCollapsed] = useSidebar();
@@ -34,6 +35,7 @@ const Header = ({ className = "custom-class" }) => {
   const [menuType] = useMenulayout();
   const [skin] = useSkin();
   const [isRtl] = useRtl();
+  const { token } = useSelector((state) => state.auth);
 
   const [mobileMenu, setMobileMenu] = useMobileMenu();
 
@@ -89,9 +91,10 @@ const Header = ({ className = "custom-class" }) => {
                   <Icon icon="heroicons-outline:menu-alt-3" />
                 </div>
               )}
-              <div className="flex-grow flex items-center justify-center">
-                <div className="relative flex flex-wrap left-3 w-1/3 bg-white dark:bg-slate-700 shadow rounded ">
-                  {/* <Controller
+              {width >= breakpoints.lg && (
+                <div className="flex-grow flex items-center justify-center">
+                  <div className="relative flex flex-wrap left-3 w-1/3 bg-white dark:bg-slate-700 shadow rounded ">
+                    {/* <Controller
                     name="category"
                     control={control}
                     render={({ field }) => (
@@ -127,23 +130,24 @@ const Header = ({ className = "custom-class" }) => {
                     )}
                   /> */}
 
-                  <input
-                    type="text"
-                    className="flex-grow outline-none bg-white dark:bg-slate-700 text-xs border border-r-0 pl-4 dark:border-slate-700 rounded-l"
-                    placeholder="Search"
-                    // {...register("search")}
-                    name="search"
-                  />
-
-                  <button className=" flex items-center gap-1 py-[2px] xl:py-1 px-4 xl:px-3 text-sm font-medium bg-black-50 dark:bg-slate-800 dark:hover:bg-slate-600 border dark:border-slate-700 focus:outline-none rounded-r focus:ring-main dark:bg-main dark:hover:bg-main dark:focus:ring-main">
-                    <Icon
-                      className="w-5 xl:w-4 h-5 xl:h-4"
-                      icon="mingcute:search-line"
+                    <input
+                      type="text"
+                      className="flex-grow outline-none bg-white dark:bg-slate-700 text-xs border border-r-0 pl-4 dark:border-slate-700 rounded-l"
+                      placeholder="Search"
+                      // {...register("search")}
+                      name="search"
                     />
-                    Search
-                  </button>
+
+                    <button className=" flex items-center gap-1 py-[2px] xl:py-1 px-4 xl:px-3 text-sm font-medium bg-black-50 dark:bg-slate-800 dark:hover:bg-slate-600 border dark:border-slate-700 focus:outline-none rounded-r focus:ring-main dark:bg-main dark:hover:bg-main dark:focus:ring-main">
+                      <Icon
+                        className="w-5 xl:w-4 h-5 xl:h-4"
+                        icon="mingcute:search-line"
+                      />
+                      Search
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
           {/* For Horizontal  */}
@@ -167,11 +171,7 @@ const Header = ({ className = "custom-class" }) => {
           ) : null}
           {/* Nav Tools  */}
           <div className="nav-tools flex items-center lg:space-x-4 space-x-3 rtl:space-x-reverse">
-            {/* <Language /> */}
-            <SwitchDark />
-            {/* <MonoChrome /> */}
-            {/* {width >= breakpoints.md && <Message />} */}
-            {width >= breakpoints.md && <Notification />}
+            {width >= breakpoints.md && token && <Notification />}
             {width >= breakpoints.md && <Profile />}
             {width <= breakpoints.md && (
               <div

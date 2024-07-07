@@ -1,10 +1,8 @@
-import React, {  Suspense, useRef } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "@/components/partials/header";
 import Sidebar from "@/components/partials/sidebar";
 import useWidth from "@/hooks/useWidth";
-import useSidebar from "@/hooks/useSidebar";
-import useContentWidth from "@/hooks/useContentWidth";
 import useMenulayout from "@/hooks/useMenulayout";
 import useMenuHidden from "@/hooks/useMenuHidden";
 import MobileMenu from "../components/partials/sidebar/MobileMenu";
@@ -13,49 +11,31 @@ import { ToastContainer } from "react-toastify";
 import Loading from "@/components/Loading";
 const Layout = () => {
   const { width, breakpoints } = useWidth();
-  const [collapsed] = useSidebar();
-  const navigate = useNavigate();
-  // const { isAuth } = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   if (!isAuth) {
-  //     navigate("/");
-  //   }
-  // }, [isAuth, navigate]);
-  const switchHeaderClass = () => {
-    if (menuType === "horizontal" || menuHidden) {
-      return "ltr:ml-0 rtl:mr-0";
-    } else if (collapsed) {
-      return "ltr:ml-[72px] rtl:mr-[72px]";
-    } else {
-      return "ltr:ml-[248px] rtl:mr-[248px]";
-    }
-  };
-  // content width
-  const [contentWidth] = useContentWidth();
   const [menuType] = useMenulayout();
   const [menuHidden] = useMenuHidden();
   // mobile menu
   const [mobileMenu, setMobileMenu] = useMobileMenu();
-  const nodeRef = useRef(null);
 
   return (
     <>
-      <ToastContainer />
-      <Header className={width > breakpoints.xl ? switchHeaderClass() : ""} />
-      {menuType === "vertical" && width > breakpoints.xl && !menuHidden && (
+      <ToastContainer position="bottom-right" theme="colored" />
+      <Header
+        className={
+          width > breakpoints.xl ? "ltr:ml-[200px] rtl:mr-[200px]" : ""
+        }
+      />
+      {menuType === "vertical" && width > breakpoints.lg && !menuHidden && (
         <Sidebar />
       )}
 
       <MobileMenu
         className={`${
-          width < breakpoints.xl && mobileMenu
+          width < breakpoints.lg && mobileMenu
             ? "left-0 visible opacity-100  z-[9999]"
             : "left-[-300px] invisible opacity-0  z-[-999] "
         }`}
       />
-      {/* mobile menu overlay*/}
-      {width < breakpoints.xl && mobileMenu && (
+      {width < breakpoints.lg && mobileMenu && (
         <div
           className="overlay bg-slate-900/50 backdrop-filter backdrop-blur-sm opacity-100 fixed inset-0 z-[999]"
           onClick={() => setMobileMenu(false)}
@@ -63,16 +43,11 @@ const Layout = () => {
       )}
       <div
         className={`content-wrapper transition-all duration-150 ${
-          width > 1280 ? switchHeaderClass() : ""
+          width > 1024 ? "ltr:ml-[200px] rtl:mr-[200px]" : ""
         }`}
       >
-        {/* md:min-h-screen will h-full*/}
-        <div className="p-4">
-          <div
-            className={
-              contentWidth === "boxed" ? "container mx-auto" : "container-fluid"
-            }
-          >
+        <div className="p-2 sm:p-4">
+          <div>
             <Suspense fallback={<Loading />}>
               {/* <Breadcrumbs /> */}
               {<Outlet />}
@@ -80,10 +55,6 @@ const Layout = () => {
           </div>
         </div>
       </div>
-      {/* {width < breakpoints.md && <MobileFooter />}
-      {width > breakpoints.md && (
-        <Footer className={width > breakpoints.xl ? switchHeaderClass() : ""} />
-      )} */}
     </>
   );
 };

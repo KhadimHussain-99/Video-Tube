@@ -156,6 +156,9 @@ const loginUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
+    domain: "localhost", // or '127.0.0.1'
+    path: "/",
   };
 
   return res

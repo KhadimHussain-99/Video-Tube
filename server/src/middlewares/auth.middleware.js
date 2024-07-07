@@ -3,14 +3,18 @@ import { ApiError } from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 
-export const verifyJwt = asyncHandler(async (req, _, next) => {
+export const verifyJwt = asyncHandler(async (req, res, next) => {
   try {
+    console.log("incoming headers: ", req.headers);
+    console.log("incoming cookies: ", req.cookies);
+
     const incomingToken =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+      req.cookies.accessToken || req.headers.Authorization?.split(" ")[1];
+
     if (!incomingToken) {
       throw new ApiError(401, "Unauthorized request");
     }
+    console.log("incoming token: ", incomingToken);
 
     const decodedToken = jwt.verify(
       incomingToken,
