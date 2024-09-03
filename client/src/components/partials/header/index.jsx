@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "@/components/ui/Icon";
-import SwitchDark from "./Tools/SwitchDark";
 import HorizentalMenu from "./Tools/HorizentalMenu";
 import useWidth from "@/hooks/useWidth";
 import useSidebar from "@/hooks/useSidebar";
@@ -94,42 +93,6 @@ const Header = ({ className = "custom-class" }) => {
               {width >= breakpoints.lg && (
                 <div className="flex-grow flex items-center justify-center">
                   <div className="relative flex flex-wrap left-3 w-1/3 bg-white dark:bg-slate-700 shadow rounded ">
-                    {/* <Controller
-                    name="category"
-                    control={control}
-                    render={({ field }) => (
-                      <div className="relative">
-                        <Dropdown
-                          filter
-                          id={field.name}
-                          value={field.value}
-                          onChange={(e) => field.onChange(e.value)}
-                          options={categories}
-                          optionLabel="name"
-                          showFilterClear
-                          placeholder="Select Category"
-                          className="min-w-[8rem] xl:!min-w-[12rem] text-xs bg-white border-white border-r-black-100 !pr-2 !pt-0.5 pb-[2px] h-9 xl:h-11 rounded-l-lg rounded-r-none relative"
-                          panelClassName="max-w-[14rem] fixed top-16 !rounded-none"
-                          pt={{
-                            item: {
-                              className: "text-xs xl:text-xs !pl-3 py-[0.4rem]",
-                            },
-                            input: {
-                              className: "text-xs pr-[0.4rem]",
-                            },
-                            wrapper: {
-                              className:
-                                "!max-h-[350px] scrollbar !rounded-md ",
-                            },
-                            trigger: { className: "!w-[2rem]" },
-                            header: { className: "bg-white px-4" },
-                            filterInput: { className: "h-3 text-xs" },
-                          }}
-                        />
-                      </div>
-                    )}
-                  /> */}
-
                     <input
                       type="text"
                       className="flex-grow outline-none bg-white dark:bg-slate-700 text-xs border border-r-0 pl-4 dark:border-slate-700 rounded-l"

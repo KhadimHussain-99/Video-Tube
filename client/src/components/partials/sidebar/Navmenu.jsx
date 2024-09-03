@@ -38,7 +38,7 @@ const Navmenu = ({ menus }) => {
         }
       }
     });
-    document.title = `PlatTube | ${locationName}`;
+    document.title = `Play Tube | ${locationName}`;
 
     setActiveSubmenu(submenuIndex);
     if (mobileMenu) {
