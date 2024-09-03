@@ -47,9 +47,9 @@ const Login = () => {
 
   return (
     <section className="container w-full h-screen flex items-center justify-center">
-      <div className="lg:w-[500px] mx-auto w-full rounded-md bg-white flex flex-col justify-center md:px-10 p-5 border border-[#E0E0E0]">
+      <div className="lg:w-[500px] mx-auto w-full rounded-md bg-white flex flex-col justify-center md:px-10 md:py-10 p-5 border border-[#E0E0E0]">
         <div className="title-area flex flex-col justify-center items-center relative text-center">
-          <h1 className="text-[34px] font-bold leading-[74px] text-qblack">
+          <h1 className="text-[34px] font-bold leading-[74px] text-black">
             {"User Login"}
           </h1>
           <div className="shape -mt-6">
@@ -69,7 +69,7 @@ const Login = () => {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 gap-2"
+          className="grid grid-cols-1 gap-5"
         >
           <div>
             <Textinput
@@ -78,7 +78,6 @@ const Login = () => {
               placeholder="Enter your email address"
               register={register}
               type={"text"}
-              onChange={(e) => setValue("email", e.target.value)}
               error={errors.email}
               isRequired
             />
@@ -90,13 +89,12 @@ const Login = () => {
               placeholder="Enter your password"
               register={register}
               type={"password"}
-              onChange={(e) => setValue("password", e.target.value)}
               error={errors.password}
               isRequired
               hasicon
             />
           </div>
-          <div className=" flex justify-end">
+          <div className=" flex justify-end mt-4">
             <button
               type="submit"
               className={`w-1/3 btn btn-primary ${

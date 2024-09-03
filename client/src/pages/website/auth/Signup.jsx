@@ -113,7 +113,7 @@ const Signup = () => {
           </div>
         </div>
         <form
-          className="grid grid-cols-2 gap-2"
+          className="grid grid-cols-2 gap-5"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="col-span-2">
@@ -224,7 +224,7 @@ const Signup = () => {
               hasicon
             />
           </div>
-          <div className="col-span-2 flex justify-end">
+          <div className="col-span-2 flex justify-end mt-4">
             <button
               type="submit"
               className={`w-1/3 btn btn-primary ${

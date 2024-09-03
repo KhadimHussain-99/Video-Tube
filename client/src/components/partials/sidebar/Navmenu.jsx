@@ -134,7 +134,7 @@ const Navmenu = ({ menus }) => {
             ${!collapsed && "border rounded-md dark:border-slate-700"}
               ${locationName === "/support" ? "menu-item-active" : ""}`}
         >
-          <NavLink className="menu-link" to={"/setting"}>
+          <NavLink className="menu-link" to={"/support"}>
             <span className="menu-icon flex-grow-0">
               <Icon icon={"ph:question"} />
             </span>
@@ -145,9 +145,9 @@ const Navmenu = ({ menus }) => {
         <li
           className={` single-sidebar-menu 
             ${!collapsed && "border rounded-md dark:border-slate-700"}
-              ${locationName === "/setting" ? "menu-item-active" : ""}`}
+              ${locationName === "/settings" ? "menu-item-active" : ""}`}
         >
-          <NavLink className="menu-link" to={"/setting"}>
+          <NavLink className="menu-link" to={"/settings"}>
             <span className="menu-icon flex-grow-0">
               <Icon icon={"simple-line-icons:settings"} />
             </span>

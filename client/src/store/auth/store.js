@@ -1,27 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const localAuthState = () => {
+const loadAuthState = () => {
   try {
-    localAuth = localStorage.getItem("auth");
-    return localAuth ? JSON.parse(localAuth) : null;
+    const serializedCheck = localStorage.getItem("auth");
+    return serializedCheck ? JSON.parse(serializedCheck) : null;
   } catch (error) {
-    console.error("Error Loading Auth from localStorage", error);
+    console.error(
+      "Error loading authentication state from localStorage:",
+      error
+    );
     return null;
   }
 };
 
 const saveAuthState = (state) => {
   try {
-    const localAuth = JSON.stringify(state);
-    localStorage.setItem("auth", localAuth);
+    const authState = JSON.stringify(state);
+    localStorage.setItem("auth", authState);
   } catch (error) {
-    console.error("Error Saving Auth from localStorage", error);
+    console.error("Error save authentication state to localStorage:", error);
   }
 };
 
-const initialState = localAuthState() || {
-  token: null,
+const initialState = loadAuthState() || {
   user: null,
+  token: null,
+  verified: null,
 };
 
 const authSlice = createSlice({
@@ -29,21 +33,23 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action) => {
-      const newAuthState = {
+      const newState = {
         ...state,
-        token: action.payload.token,
         user: action.payload.user,
+        token: action.payload.token,
+        verified: action.payload.verified,
       };
-      saveAuthState(newAuthState);
-      return newAuthState;
+      saveAuthState(newState);
+      return newState;
     },
     clearAuth: (state) => {
-      const newAuthState = {
-        token: null,
+      const newState = {
         user: null,
+        token: null,
+        verified: null,
       };
-      saveAuthState(newAuthState);
-      return newAuthState;
+      saveAuthState(newState);
+      return newState;
     },
   },
 });
