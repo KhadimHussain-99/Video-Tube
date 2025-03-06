@@ -19,13 +19,13 @@ const profileLabel = () => {
       <div className="flex items-center gap-3">
         <Link
           to="/login"
-          className="btn py-1 px-3 bg-primary-600 rounded text-white dark:text-slate-200 font-medium"
+          className="btn py-1 px-3 hover:bg-main text-white  font-medium"
         >
           Login
         </Link>
         <Link
           to="/signup"
-          className="btn py-1 px-3 bg-primary-600 rounded text-white dark:text-slate-200 font-medium"
+          className="btn py-1 px-3 bg-main text-white dark:text-slate-200 font-medium"
         >
           Sign Up
         </Link>
@@ -39,14 +39,14 @@ const profileLabel = () => {
         <div className="lg:h-8 lg:w-8 h-7 w-7 rounded-full">
           <img
             src={user?.avatar}
-            alt=""
+            alt={`${user?.firstName} ${user?.lastName} profile picture`}
             className="block w-full h-full object-cover rounded-full"
           />
         </div>
       </div>
       <div className="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">
         <span className="overflow-hidden text-ellipsis whitespace-nowrap w-[85px] block">
-          {user?.fullName}
+          {`${user?.firstName} ${user?.lastName}`}
         </span>
         <span className="text-base inline-block ltr:ml-[10px] rtl:mr-[10px]">
           <Icon icon="heroicons-outline:chevron-down"></Icon>

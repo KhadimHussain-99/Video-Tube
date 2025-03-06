@@ -10,8 +10,7 @@ import noData from "../../../assets/images/vectors/no-data.webp";
 
 const schema = yup.object().shape({
   firstname: yup.string().required("First Name is required"),
-
-  fullName: yup.string().required("Full Name is required"),
+  lastName: yup.string().required("Full Name is required"),
   email: yup.string().email().required("Email is required"),
   avatar: yup
     .mixed()
@@ -41,7 +40,8 @@ const schema = yup.object().shape({
 });
 
 const Signup = () => {
-  const [avatar, setAvatar] = useState(null);
+  const [avatarImg, setAvatarImg] = useState(null);
+  console.log("from signup page:", avatarImg);
   const [err, setErr] = useState({});
   const [coverImage, setCoverImage] = useState(null);
 
@@ -49,17 +49,16 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
 
   const onSubmit = async (data) => {
-    if (!avatar) {
+    if (!avatarImg) {
       setErr((prev) => ({
         ...prev,
-        [avatar]: { message: `avatar file is required` },
+        [avatarImg]: { message: `avatar file is required` },
       }));
       return;
     }
@@ -67,12 +66,12 @@ const Signup = () => {
     try {
       const res = await axios.post(registerUserApi, {
         ...data,
-        avatar,
+        avatar: avatarImg,
         coverImage,
       });
-      console.log(res);
+      console.log("respond: ", res);
     } catch (error) {
-      console.log(error.message);
+      console.log("error message: ", error.message);
     }
   };
 
@@ -86,7 +85,7 @@ const Signup = () => {
       }));
       return;
     }
-    if (name === "avatar") setAvatar(file);
+    if (name === "avatar") setAvatarImg(file);
     if (name === "coverImage") setCoverImage(file);
   };
 
@@ -123,7 +122,6 @@ const Signup = () => {
               placeholder="Enter your First Name"
               type="text"
               label={"First Name"}
-              onChange={(e) => setValue("firstname", e.target.value)}
               error={errors.firstname}
               isRequired
             />
@@ -131,12 +129,11 @@ const Signup = () => {
           <div className="col-span-1">
             <Textinput
               register={register}
-              name={"FullName"}
+              name={"lastName"}
               placeholder="Enter your Full Name"
               type="text"
               label={"Full Name"}
-              onChange={(e) => setValue("fullName", e.target.value)}
-              error={errors.fullName}
+              error={errors.lastName}
               isRequired
             />
           </div>
@@ -147,7 +144,6 @@ const Signup = () => {
               placeholder="Enter your Email"
               type="email"
               label={"Email"}
-              onChange={(e) => setValue("email", e.target.value)}
               error={errors.email}
               isRequired
             />
@@ -161,14 +157,14 @@ const Signup = () => {
               onChange={(e) => handleFileChange(e, "avatar")}
               preview
               isRequired
-              selectedFile={avatar}
+              selectedFile={avatarImg}
             />
-            {err?.avatar?.message && (
+            {err?.avatarImg?.message && (
               <p className=" mt-2 text-danger-500 block text-sm self-start">
-                {err?.avatar?.message}
+                {err?.avatarImg?.message}
               </p>
             )}
-            {!avatar && (
+            {!avatarImg && (
               <div className="w-[80%] h-[200px] mx-auto mt-2">
                 <img
                   src={noData}
@@ -205,7 +201,6 @@ const Signup = () => {
               type="text"
               label={"Password"}
               placeholder="password"
-              onChange={(e) => setValue("password", e.target.value)}
               error={errors.password}
               isRequired
               hasicon
@@ -218,7 +213,6 @@ const Signup = () => {
               type="text"
               label={"Confirm Password"}
               placeholder="confirm password"
-              onChange={(e) => setValue("confirmPassword", e.target.value)}
               error={errors.confirmPassword}
               isRequired
               hasicon

@@ -17,11 +17,11 @@ const Layout = () => {
   const [mobileMenu, setMobileMenu] = useMobileMenu();
 
   return (
-    <>
+    <div className="relative">
       <ToastContainer position="bottom-right" theme="colored" />
       <Header
         className={
-          width > breakpoints.xl ? "ltr:ml-[200px] rtl:mr-[200px]" : ""
+          width > breakpoints.xl ? "ltr:ml-[220px] rtl:mr-[220px]" : ""
         }
       />
       {menuType === "vertical" && width > breakpoints.lg && !menuHidden && (
@@ -42,20 +42,18 @@ const Layout = () => {
         ></div>
       )}
       <div
-        className={`content-wrapper transition-all duration-150 ${
-          width > 1024 ? "ltr:ml-[200px] rtl:mr-[200px]" : ""
+        className={` transition-all duration-150 ${
+          width > 1024 ? "ltr:ml-[220px] rtl:mr-[220px]" : ""
         }`}
       >
-        <div className="p-2 sm:p-4">
-          <div>
-            <Suspense fallback={<Loading />}>
-              {/* <Breadcrumbs /> */}
-              {<Outlet />}
-            </Suspense>
-          </div>
-        </div>
+        <main className="min-h-screen">
+          <Suspense fallback={<Loading />}>
+            {/* <Breadcrumbs /> */}
+            {<Outlet />}
+          </Suspense>
+        </main>
       </div>
-    </>
+    </div>
   );
 };
 

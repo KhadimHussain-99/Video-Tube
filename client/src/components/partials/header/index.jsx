@@ -17,6 +17,7 @@ const Header = ({ className = "custom-class" }) => {
   const [collapsed, setMenuCollapsed] = useSidebar();
   const { width, breakpoints } = useWidth();
   const [navbarType] = useNavbarType();
+  // console.log("i am the type: " + navbarType);
   const navbarTypeClass = () => {
     switch (navbarType) {
       case "floating":
@@ -52,9 +53,9 @@ const Header = ({ className = "custom-class" }) => {
     }
   };
   return (
-    <header className={className + " " + navbarTypeClass()}>
+    <header className={`${className} sticky top-0 z-[999] bg-secondary-main`}>
       <div
-        className={`  md:px-4 px-[15px]  dark:bg-slate-800 shadow-base dark:shadow-base3 bg-white
+        className={`h-[72px] md:px-4 px-[15px] border-b border-white 
         ${borderSwicthClass()}
              ${
                menuType === "horizontal" && width > breakpoints.xl
@@ -70,7 +71,7 @@ const Header = ({ className = "custom-class" }) => {
             <div className="flex-grow flex items-center flex-wrap md:space-x-4 space-x-2 rtl:space-x-reverse">
               {collapsed && width >= breakpoints.xl && (
                 <button
-                  className="text-xl text-slate-900 dark:text-white"
+                  className="text-xl"
                   onClick={() => setMenuCollapsed(!collapsed)}
                 >
                   {isRtl ? (
@@ -84,7 +85,7 @@ const Header = ({ className = "custom-class" }) => {
               {/* open mobile menu handlaer*/}
               {width < breakpoints.xl && width >= breakpoints.md && (
                 <div
-                  className="cursor-pointer text-slate-900 dark:text-white text-2xl"
+                  className="cursor-pointer text-2xl"
                   onClick={handleOpenMobileMenu}
                 >
                   <Icon icon="heroicons-outline:menu-alt-3" />
@@ -92,22 +93,18 @@ const Header = ({ className = "custom-class" }) => {
               )}
               {width >= breakpoints.lg && (
                 <div className="flex-grow flex items-center justify-center">
-                  <div className="relative flex flex-wrap left-3 w-1/3 bg-white dark:bg-slate-700 shadow rounded ">
+                  <div className="relative flex flex-wrap left-3 w-1/3 px-3.5 py-2.5 bg-secondary-main border text-white border-white">
                     <input
                       type="text"
-                      className="flex-grow outline-none bg-white dark:bg-slate-700 text-xs border border-r-0 pl-4 dark:border-slate-700 rounded-l"
+                      className="flex-grow outline-none text-xs  pl-6 bg-transparent text-white placeholder:text-white rounded-l"
                       placeholder="Search"
-                      // {...register("search")}
                       name="search"
                     />
 
-                    <button className=" flex items-center gap-1 py-[2px] xl:py-1 px-4 xl:px-3 text-sm font-medium bg-black-50 dark:bg-slate-800 dark:hover:bg-slate-600 border dark:border-slate-700 focus:outline-none rounded-r focus:ring-main dark:bg-main dark:hover:bg-main dark:focus:ring-main">
-                      <Icon
-                        className="w-5 xl:w-4 h-5 xl:h-4"
-                        icon="mingcute:search-line"
-                      />
-                      Search
-                    </button>
+                    <Icon
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-5 xl:w-4 h-5 xl:h-4"
+                      icon="mingcute:search-line"
+                    />
                   </div>
                 </div>
               )}
@@ -120,7 +117,7 @@ const Header = ({ className = "custom-class" }) => {
               {/* open mobile menu handlaer*/}
               {width <= breakpoints.xl && (
                 <div
-                  className="cursor-pointer text-slate-900 dark:text-white text-2xl"
+                  className="cursor-pointer text-2xl"
                   onClick={handleOpenMobileMenu}
                 >
                   <Icon icon="heroicons-outline:menu-alt-3" />
@@ -138,7 +135,7 @@ const Header = ({ className = "custom-class" }) => {
             {width >= breakpoints.md && <Profile />}
             {width <= breakpoints.md && (
               <div
-                className="cursor-pointer text-slate-900 dark:text-white text-2xl"
+                className="cursor-pointer text-2xl"
                 onClick={handleOpenMobileMenu}
               >
                 <Icon icon="heroicons-outline:menu-alt-3" />

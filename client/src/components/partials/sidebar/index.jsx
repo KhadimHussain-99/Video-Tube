@@ -27,9 +27,7 @@ const Sidebar = () => {
   const [isSemiDark] = useSemiDark();
   // skin
   return (
-    <div
-      className={`sidebar-wrapper bg-white dark:bg-slate-800 w-[200px] shadow-sm`}
-    >
+    <div className={`sidebar-wrapper w-[220px] `}>
       <SidebarLogo />
       {/* <div
           className={`h-[60px] absolute top-[80px] nav-shadow z-[1] w-full transition-all duration-200 pointer-events-none ${
@@ -38,7 +36,7 @@ const Sidebar = () => {
         ></div> */}
 
       <SimpleBar
-        className="sidebar-menu pt-4 px-4 h-full"
+        className="sidebar-menu pt-8 px-4 h-full border-r border-white"
         scrollableNodeProps={{ ref: scrollableNodeRef }}
       >
         <Navmenu menus={menuItems} />

@@ -24,6 +24,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
+  console.log("i am in register user");
   //
   //<assignment>
   // take data from frontend through api request
@@ -36,7 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
   //<solution>
   // get user details from frontend
   // validation - not empty
-  // check if user is already exists: username, email
+  // check if user is already exists: firstName, email
   // check for images, check for avatar
   // upload them to cloudinary, avatar
   // create user object - create entry in db
@@ -45,22 +46,22 @@ const registerUser = asyncHandler(async (req, res) => {
   //</solution>
   //
 
-  const { username, fullName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   if (
-    [username, fullName, email, password].some((field) => field?.trim() === "")
+    [firstName, lastName, email, password].some((field) => field?.trim() === "")
   ) {
     throw new ApiError(400, "All fields are required");
   }
 
   const existedUser = await User.findOne({
-    $or: [{ username }, { email }],
+    email,
   });
 
   if (existedUser) {
-    throw new ApiError(409, "User with email or username already exists");
+    throw new ApiError(409, "User with email already exists");
   }
-  const avatarLocalPath = req.files?.avatar[0].path;
+  const avatarLocalPath = req.files?.avatar[0]?.path;
   // const coverImageLocalPath = req.files?.coverImage[0].path;
 
   let coverImageLocalPath;
@@ -84,8 +85,8 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    username,
-    fullName,
+    firstName,
+    lastName,
     avatar: avatar.url,
     coverImage: coverImage?.url || "",
     email,
@@ -108,9 +109,9 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   //
   //<assignment>
-  // get username or email and password
+  // get firstName or email and password
   // check all fields are not empty
-  // find user in database through data base call with username and email
+  // find user in database through data base call with firstName and email
   // check password is same as in database
   // generate tokens
   // return response with tokens
@@ -118,21 +119,22 @@ const loginUser = asyncHandler(async (req, res) => {
   //
   //<solution>
   // req body -> data
-  // username or email
+  // firstName or email
   // find the user
   // password check
   // access and refresh tokens
   // send cookies
   //</solution>
 
-  const { email, username, password } = req.body;
+  const { email, password } = req.body;
+  console.log("i am in login user", email, "and password", password);
 
-  if (!(username || email)) {
-    throw new ApiError(400, "Username or Email is required");
+  if (!email) {
+    throw new ApiError(400, "Email is required");
   }
 
   const user = await User.findOne({
-    $or: [{ email }, { username }],
+    email,
   });
 
   if (!user) {
@@ -268,16 +270,16 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
-  const { fullName, email } = req.body;
+  const { lastName, email } = req.body;
 
-  if (!fullName || !email) {
+  if (!lastName || !email) {
     throw new ApiError(400, "All fields are required");
   }
 
   const user = User.findByIdAndUpdate(
     req.user?._id,
     {
-      $set: { fullName, email },
+      $set: { lastName, email },
     },
     { new: true }
   ).select("-password");
@@ -340,15 +342,15 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 });
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-  const { username } = req.params;
+  const { firstName } = req.params;
 
-  if (!username?.trim()) {
-    throw new ApiError(400, "username is missing");
+  if (!firstName?.trim()) {
+    throw new ApiError(400, "firstName is missing");
   }
 
   const channel = await User.aggregate([
     {
-      $match: { username: username?.toLowerCase() },
+      $match: { firstName: firstName?.toLowerCase() },
     },
     {
       $lookup: {
@@ -387,8 +389,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     },
     {
       $project: {
-        fullName: 1,
-        username: 1,
+        lastName: 1,
+        firstName: 1,
         subscribersCount: 1,
         channelsSubscribedToCount: 1,
         isSubscribed: 1,
@@ -435,8 +437,8 @@ const getWatchHistory = asyncHandler(async (req, res) => {
               pipeline: [
                 {
                   $project: {
-                    fullName: 1,
-                    username: 1,
+                    lastName: 1,
+                    firstName: 1,
                     avatar: 1,
                   },
                 },

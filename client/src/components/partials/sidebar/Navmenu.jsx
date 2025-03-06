@@ -48,19 +48,22 @@ const Navmenu = ({ menus }) => {
 
   return (
     <>
-      <ul className="relative space-y-2">
+      <ul className="relative space-y-1">
         {menus.map((item, i) => (
           <li
             key={i}
-            className={` single-sidebar-menu 
-            ${!collapsed && "border rounded-md dark:border-slate-700"}
+            className={` single-sidebar-menu group 
+            ${!collapsed && " dark:border-slate-700"}
               ${item.child ? "item-has-children" : ""}
               ${activeSubmenu === i ? "open" : ""}
               ${locationName === item.link ? "menu-item-active" : ""}`}
           >
             {/* single menu with no childred*/}
             {!item.child && !item.isHeadr && (
-              <NavLink className="menu-link" to={item.link}>
+              <NavLink
+                className="menu-link group-hover:text-secondary-main"
+                to={item.link}
+              >
                 <span className="menu-icon flex-grow-0">
                   <Icon icon={item.icon} />
                 </span>
@@ -130,11 +133,14 @@ const Navmenu = ({ menus }) => {
           </li>
         ))}
         <li
-          className={` single-sidebar-menu 
-            ${!collapsed && "border rounded-md dark:border-slate-700"}
+          className={` single-sidebar-menu group
+            ${!collapsed && "border "}
               ${locationName === "/support" ? "menu-item-active" : ""}`}
         >
-          <NavLink className="menu-link" to={"/support"}>
+          <NavLink
+            className="menu-link group-hover:text-secondary-main"
+            to={"/support"}
+          >
             <span className="menu-icon flex-grow-0">
               <Icon icon={"ph:question"} />
             </span>
@@ -143,11 +149,14 @@ const Navmenu = ({ menus }) => {
           </NavLink>
         </li>
         <li
-          className={` single-sidebar-menu 
-            ${!collapsed && "border rounded-md dark:border-slate-700"}
+          className={` single-sidebar-menu group 
+            ${!collapsed && "border "}
               ${locationName === "/settings" ? "menu-item-active" : ""}`}
         >
-          <NavLink className="menu-link" to={"/settings"}>
+          <NavLink
+            className="menu-link group-hover:text-secondary-main"
+            to={"/settings"}
+          >
             <span className="menu-icon flex-grow-0">
               <Icon icon={"simple-line-icons:settings"} />
             </span>

@@ -6,8 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [""],
-    methods: ["POST", "GET"],
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
@@ -24,7 +23,7 @@ import videoRouter from "./routes/video.routes.js";
 app.get("/", (req, res) => {
   res.json("Hello World!");
 });
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/videos", videoRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/video", videoRouter);
 
 export { app };

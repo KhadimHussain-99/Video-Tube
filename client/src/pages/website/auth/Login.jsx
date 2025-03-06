@@ -22,7 +22,6 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setValue,
   } = useForm({ resolver: yupResolver(schema), mode: "onSubmit" });
 
   const onSubmit = async (data) => {
@@ -36,7 +35,7 @@ const Login = () => {
           })
         );
         navigate("/");
-        toast.success(res.messgae);
+        toast.success(res.message);
       } else {
         toast.error(res.error);
       }
